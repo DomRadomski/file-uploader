@@ -1,10 +1,10 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import passport from "../config/passport.js";
-import { PrismaClient } from "../generated/prisma/client.js";
+import { prisma } from "../lib/prisma.js";
 
 const router = express.Router();
-const prisma = new PrismaClient();
+
 
 // Register
 router.post("/register", async (req, res, next) => {
@@ -40,3 +40,4 @@ router.post("/logout", (req, res, next) => {
 });
 
 export default router;
+
