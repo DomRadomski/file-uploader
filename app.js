@@ -1,6 +1,6 @@
 // app.js
-const path = require("node:path");
-const express = require("express");
+import path from "node:path";
+import express from "express";
 
 const app = express();
 
