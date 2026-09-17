@@ -3,7 +3,25 @@
 <head><title>Dashboard</title></head>
 <body>
   <h1>Welcome, <%= user.username %></h1>
-  <p>If you can see this, you're logged in.</p>
+
+  <p>
+    <a href="/folders/create">+ New folder</a> |
+    <a href="/files/upload">+ Upload a file</a>
+  </p>
+
+  <% if (folders.length === 0 && looseFiles.length === 0) { %>
+    <p>Nothing here yet.</p>
+  <% } else { %>
+    <ul>
+      <% folders.forEach((folder) => { %>
+        <li>📁 <a href="/folders/<%= folder.id %>"><%= folder.name %></a></li>
+      <% }) %>
+      <% looseFiles.forEach((file) => { %>
+        <li>📄 <a href="/files/<%= file.id %>"><%= file.originalName %></a></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
   <form method="POST" action="/logout">
     <button type="submit">Log out</button>
   </form>

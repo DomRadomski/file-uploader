@@ -51,6 +51,18 @@ export function postLogout(req, res, next) {
 }
 
 // GET /dashboard
-export function getDashboard(req, res) {
-  res.render("dashboard", { user: req.user });
+export async function getDashboard(req, res, next) {
+  try {
+    const folders = await prisma.folder.findMany({
+      where: { userId: req.user.id },
+    });
+
+    const looseFiles = await prisma.file.findMany({
+      where: { userId: req.user.id, folderId: null },
+    });
+
+    res.render("dashboard", { user: req.user, folders, looseFiles });
+  } catch (err) {
+    next(err);
+  }
 }

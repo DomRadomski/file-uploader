@@ -17,7 +17,7 @@
   <% } else { %>
     <ul>
       <% folder.files.forEach((file) => { %>
-        <li><%= file.originalName %> (<%= file.size %> bytes)</li>
+        <li><a href="/files/<%= file.id %>"><%= file.originalName %></a> (<%= file.size %> bytes)</li>
       <% }) %>
     </ul>
   <% } %>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title><%= file.originalName %></title></head>
+<body>
+  <h1><%= file.originalName %></h1>
+
+  <table>
+    <tr><td>Size</td><td><%= file.size %> bytes</td></tr>
+    <tr><td>Type</td><td><%= file.mimetype %></td></tr>
+    <tr><td>Uploaded</td><td><%= file.uploadedAt.toLocaleString() %></td></tr>
+  </table>
+
+  <p>
+    <a href="/files/<%= file.id %>/download">Download</a>
+  </p>
+
+  <p>
+    <a href="<%= file.folderId ? `/folders/${file.folderId}` : '/dashboard' %>">Back</a>
+  </p>
+</body>
+</html>

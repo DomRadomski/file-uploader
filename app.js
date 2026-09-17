@@ -31,7 +31,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use(authRouter);
-app.use(fileRouter);
+app.use("/files", fileRouter);
 app.use("/folders", folderRouter);
 
 app.get("/", (req, res) => {

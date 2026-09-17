@@ -53,3 +53,13 @@ export async function postUploadToFolder(req, res, next) {
     next(err);
   }
 }
+
+// GET /files/:id
+export function show(req, res) {
+  res.render("files/show", { file: req.fileRecord });
+}
+
+// GET /files/:id/download
+export function download(req, res) {
+  res.download(req.fileRecord.path, req.fileRecord.originalName);
+}
