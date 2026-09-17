@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head><title><%= folder.name %></title></head>
+<body>
+  <h1><%= folder.name %></h1>
+
+  <p>
+    <a href="/folders/<%= folder.id %>/update">Rename</a> |
+    <form method="POST" action="/folders/<%= folder.id %>/delete" style="display: inline;">
+      <button type="submit" onclick="return confirm('Delete this folder and everything in it?')">Delete folder</button>
+    </form>
+  </p>
+
+  <h2>Files</h2>
+  <% if (folder.files.length === 0) { %>
+    <p>No files in this folder yet.</p>
+  <% } else { %>
+    <ul>
+      <% folder.files.forEach((file) => { %>
+        <li><%= file.originalName %> (<%= file.size %> bytes)</li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <h3>Upload a file to this folder</h3>
+  <form method="POST" action="/folders/<%= folder.id %>/upload" enctype="multipart/form-data">
+    <input type="file" name="file" required />
+    <button type="submit">Upload</button>
+  </form>
+
+  <p><a href="/folders">Back to folders</a></p>
+</body>
+</html>

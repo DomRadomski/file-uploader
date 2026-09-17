@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>My Folders</title></head>
+<body>
+  <h1>My Folders</h1>
+
+  <p><a href="/folders/create">+ New folder</a></p>
+
+  <% if (folders.length === 0) { %>
+    <p>You don't have any folders yet.</p>
+  <% } else { %>
+    <ul>
+      <% folders.forEach((folder) => { %>
+        <li>
+          <a href="/folders/<%= folder.id %>"><%= folder.name %></a>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+</body>
+</html>

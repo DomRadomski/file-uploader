@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Rename Folder</title></head>
+<body>
+  <h1>Rename folder</h1>
+  <% if (error) { %>
+    <p style="color: red;"><%= error %></p>
+  <% } %>
+  <form method="POST" action="/folders/<%= folder.id %>/update">
+    <label for="name">Folder name</label>
+    <input type="text" id="name" name="name" value="<%= folder.name %>" required />
+    <br />
+    <button type="submit">Save</button>
+  </form>
+  <p><a href="/folders/<%= folder.id %>">Cancel</a></p>
+</body>
+</html>

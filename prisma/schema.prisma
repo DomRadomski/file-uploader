@@ -12,13 +12,6 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id       Int    @id @default(autoincrement())
-  username String @unique
-  password String
-  files    File[]
-}
-
 model Session {
   id        String   @id
   sid       String   @unique
@@ -26,16 +19,35 @@ model Session {
   expiresAt DateTime
 }
 
+model Folder {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  files     File[]
+}
+
 model File {
   id           Int      @id @default(autoincrement())
-  filename     String   // the name it's saved as on disk
-  originalName String   // the name it had on the user's machine
-  path         String   // where it lives on disk
-  size         Int      // bytes
+  filename     String
+  originalName String
+  path         String
+  size         Int
   mimetype     String
   uploadedAt   DateTime @default(now())
   user         User     @relation(fields: [userId], references: [id])
   userId       Int
+  folder       Folder?  @relation(fields: [folderId], references: [id])
+  folderId     Int?
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  password String
+  files    File[]
+  folders  Folder[]
 }
 
 
