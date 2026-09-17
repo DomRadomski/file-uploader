@@ -4,7 +4,9 @@ import { fileURLToPath } from "node:url";
 import express from "express";
 import { sessionMiddleware } from "./config/session.js";
 import passport from "./config/passport.js";
+
 import authRouter from "./routes/authRoutes.js";
+import fileRouter from "./routes/fileRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,6 +30,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use(authRouter);
+app.use(fileRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the homepage my driller");
