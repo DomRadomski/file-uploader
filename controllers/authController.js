@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import passport from "../config/passport.js";
+import { validationResult } from "express-validator";
 import { prisma } from "../lib/prisma.js";
 
 // GET /register
@@ -10,6 +10,11 @@ export function getRegister(req, res) {
 // POST /register
 export async function postRegister(req, res, next) {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.render("register", { error: errors.array()[0].msg });
+    }
+
     const { username, password } = req.body;
 
     const existingUser = await prisma.user.findUnique({ where: { username } });
@@ -31,11 +36,14 @@ export function getLogin(req, res) {
   res.render("login", { error: null });
 }
 
-// POST /login
-export const postLogin = passport.authenticate("local", {
-  successRedirect: "/dashboard",
-  failureRedirect: "/login",
-});
+// POST /login — runs loginValidation first, then this
+export function postLogin(req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.render("login", { error: errors.array()[0].msg });
+  }
+  next(); // hand off to passport.authenticate
+}
 
 // GET /logout
 export function getLogout(req, res) {
