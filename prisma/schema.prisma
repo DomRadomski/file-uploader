@@ -32,7 +32,7 @@ model File {
   id           Int      @id @default(autoincrement())
   filename     String
   originalName String
-  path         String
+  url          String   // Supabase public URL
   size         Int
   mimetype     String
   uploadedAt   DateTime @default(now())
