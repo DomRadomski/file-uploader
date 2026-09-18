@@ -37,7 +37,12 @@ export async function show(req, res, next) {
       where: { id: req.folder.id },
       include: { files: true },
     });
-    res.render("folders/show", { folder });
+
+    const shareUrl = req.query.shared
+      ? `${req.protocol}://${req.get("host")}/share/${req.query.shared}`
+      : null;
+
+    res.render("folders/show", { folder, shareUrl });
   } catch (err) {
     next(err);
   }
@@ -84,8 +89,9 @@ export async function destroy(req, res, next) {
 
     // Then remove the DB records and the folder itself
     await prisma.$transaction([
-      prisma.file.deleteMany({ where: { folderId: req.folder.id } }),
-      prisma.folder.delete({ where: { id: req.folder.id } }),
+        prisma.share.deleteMany({ where: { folderId: req.folder.id } }),
+        prisma.file.deleteMany({ where: { folderId: req.folder.id } }),
+        prisma.folder.delete({ where: { id: req.folder.id } }),
     ]);
 
     res.redirect("/folders");

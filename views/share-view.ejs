@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title><%= folder.name %> (shared)</title></head>
+<body>
+  <h1><%= folder.name %></h1>
+  <p><em>This is a shared folder — read-only.</em></p>
+
+  <% if (folder.files.length === 0) { %>
+    <p>No files in this folder.</p>
+  <% } else { %>
+    <ul>
+      <% folder.files.forEach((file) => { %>
+        <li>
+          <a href="<%= file.url %>" target="_blank"><%= file.originalName %></a>
+          (<%= file.size %> bytes)
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+</body>
+</html>

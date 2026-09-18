@@ -4,6 +4,7 @@ import { ensureAuthenticated } from "../config/authMiddleware.js";
 import { ensureFolderOwnership } from "../config/ensureFolderOwnership.js";
 import { upload } from "../config/multer.js";
 import * as fileController from "../controllers/fileController.js";
+import * as shareController from "../controllers/shareController.js";
 
 const router = Router();
 
@@ -24,5 +25,7 @@ router.post(
   upload.single("file"),
   fileController.postUploadToFolder
 );
+
+router.post("/:id/share", ensureFolderOwnership, shareController.createShare);
 
 export default router;

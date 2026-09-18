@@ -8,6 +8,7 @@ import passport from "./config/passport.js";
 import authRouter from "./routes/authRoutes.js";
 import fileRouter from "./routes/fileRoutes.js";
 import folderRouter from "./routes/folderRoutes.js";
+import shareRouter from "./routes/shareRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,6 +34,7 @@ app.set("view engine", "ejs");
 app.use(authRouter);
 app.use("/files", fileRouter);
 app.use("/folders", folderRouter);
+app.use("/share", shareRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the homepage my driller");
