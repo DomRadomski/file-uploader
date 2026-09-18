@@ -6,9 +6,34 @@
   <% if (error) { %>
     <p style="color: red;"><%= error %></p>
   <% } %>
-  <form method="POST" action="/files/upload" enctype="multipart/form-data">
-    <input type="file" name="file" required />
+  <form method="POST" action="/files/upload" enctype="multipart/form-data" id="uploadForm">
+    <input
+        type="file"
+        name="file"
+        id="fileInput"
+        accept=".jpg,.jpeg,.png,.webp,.pdf,.txt"
+        required
+    />
+    <p id="clientError" style="color: red;"></p>
     <button type="submit">Upload</button>
-  </form>
+    </form>
+
+    <script>
+        const MAX_SIZE = 10 * 1024 * 1024;
+        const form = document.getElementById("uploadForm");
+        const input = document.getElementById("fileInput");
+        const errorEl = document.getElementById("clientError");
+
+        form.addEventListener("submit", (e) => {
+            errorEl.textContent = "";
+            const file = input.files[0];
+            if (!file) return;
+
+            if (file.size > MAX_SIZE) {
+            e.preventDefault();
+            errorEl.textContent = "File is too large — max 10MB";
+            }
+        });
+    </script>
 </body>
 </html>

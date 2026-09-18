@@ -38,6 +38,20 @@ app.get("/", (req, res) => {
   res.send("Welcome to the homepage my driller");
 });
 
+import multer from "multer";
+
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    if (err.code === "LIMIT_FILE_SIZE") {
+      return res.status(400).render("upload", { error: "File is too large — max 10MB" });
+    }
+    if (err.code === "LIMIT_UNEXPECTED_FILE") {
+      return res.status(400).render("upload", { error: "Unsupported file type" });
+    }
+  }
+  next(err);
+});
+
 const PORT = 6969;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

@@ -1,8 +1,25 @@
 import multer from "multer";
 
+const allowedMimeTypes = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+  "text/plain",
+];
+
+function fileFilter(req, file, cb) {
+  if (allowedMimeTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE", "Unsupported file type"));
+  }
+}
+
 export const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter,
 });
 
 // import path from "node:path";
